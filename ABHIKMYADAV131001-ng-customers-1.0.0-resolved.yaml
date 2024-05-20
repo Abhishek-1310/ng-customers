@@ -1,46 +1,39 @@
----
 openapi: 3.0.0
 info:
-  title: ng-Customers API
   description: get customers details by customerId
+  version: "1.0.0"
+  title: ng-Customers API
   contact:
     email: abhikmyadav1310@gmail.com
   license:
     name: Apache 2.0
-    url: http://localhost:3000
-  version: 1.0.0
-servers:
-- url: https://virtserver.swaggerhub.com/ABHIKMYADAV131001/ng-customers/1.0.0
-  description: SwaggerHub API Auto Mocking
-- url: https://localhost
-  description: SwaggerHub API Auto Mocking
+    url: 'http://localhost:3000'
 tags:
-- name: Customers
-  description: Operations related to customer details
+  - name: Customers
+    description: Operations related to customer details
 paths:
   /customers/{customerId}:
     get:
       tags:
-      - customers
+        - customers
       summary: Retrieve customer details
       description: |
         Get customer information based on  customer ID.
       parameters:
-      - name: customerId
-        in: path
-        description: customerId as a path parameter.
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
+        - in: path
+          name: customerId
+          description: customerId as a path parameter.
+          required: true
+          schema:
+            type: string
+       
       responses:
-        "200":
+        '200':
           description: Customer details retrieved successfully.
           content:
             application/jsonApi:
               schema:
-                type: array
+                type: object
                 properties:
                   customerId:
                     type: string
@@ -56,33 +49,33 @@ paths:
                         example: "26543260"
                       applianceName:
                         type: string
-                        example: Gas Cooker
+                        example: "Gas Cooker"
                       category:
                         type: string
-                        example: gas
+                        example : "gas" 
                       manufactureDate:
                         type: string
                         example: ""
                   email:
                     type: string
-                    example: stevejobs@gmail.com
+                    example: "stevejobs@gmail.com"
                   firstName:
                     type: string
-                    example: Steve
+                    example: "Steve"
                   lastName:
                     type: string
-                    example: Jobs
+                    example: "Jobs"
                   phonenumber:
                     type: string
                     example: "9080706050"
                 items:
                   $ref: '#/components/schemas/Customer'
-        "400":
+        '400':
           description: Invalid request
           content:
             application/jsonApi:
               schema:
-                type: array
+                type: object
                 properties:
                   error:
                     type: string
@@ -92,12 +85,13 @@ paths:
                     example: 400
                 items:
                   $ref: '#/components/schemas/InvalidRequest'
-        "401":
+                    
+        '401':
           description: Unauthorized
           content:
             application/jsonApi:
               schema:
-                type: array
+                type: object
                 properties:
                   error:
                     type: string
@@ -107,12 +101,13 @@ paths:
                     example: 401
                 items:
                   $ref: '#/components/schemas/UnauthorizedError'
-        "500":
+
+        '500':
           description: Internal Server Error
           content:
             application/jsonApi:
               schema:
-                type: array
+                type: object
                 properties:
                   error:
                     type: string
@@ -122,8 +117,10 @@ paths:
                     example: 500
                 items:
                   $ref: '#/components/schemas/InternalServerError'
+
 components:
   schemas:
+
     Customer:
       type: object
       properties:
@@ -131,19 +128,36 @@ components:
           type: string
           example: "3678905"
         appliances:
-          $ref: '#/components/schemas/Customer_appliances'
+          type: object
+          properties:
+            age:
+              type: string
+              example: "12"
+            applianceId:
+              type: string
+              example: "26543260"
+            applianceName:
+              type: string
+              example: "Gas Cooker"
+            category:
+              type: string
+              example: "gas"
+            manufactureDate:
+              type: string
+              example: "2012-11-17"
         email:
           type: string
-          example: stevejobs@gmail.com
+          example: "stevejobs@gmail.com"
         firstName:
           type: string
-          example: Steve
+          example: "Steve"
         lastName:
           type: string
-          example: Jobs
+          example: "Jobs"
         phonenumber:
           type: string
           example: "9080706050"
+          
     InvalidRequest:
       type: object
       properties:
@@ -153,6 +167,9 @@ components:
         status:
           type: integer
           example: 400
+                  
+             
+
     UnauthorizedError:
       type: object
       properties:
@@ -162,6 +179,9 @@ components:
         status:
           type: integer
           example: 401
+                  
+                  
+                  
     InternalServerError:
       type: object
       properties:
@@ -171,21 +191,13 @@ components:
         status:
           type: integer
           example: 500
-    Customer_appliances:
-      type: object
-      properties:
-        age:
-          type: string
-          example: "12"
-        applianceId:
-          type: string
-          example: "26543260"
-        applianceName:
-          type: string
-          example: Gas Cooker
-        category:
-          type: string
-          example: gas
-        manufactureDate:
-          type: string
-          example: 2012-11-17
+
+         
+    
+servers:
+  # Added by API Auto Mocking Plugin
+  # Added by API Auto Mocking Plugin
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/ABHIKMYADAV131001/ng-customers/1.0.0
+  - description: SwaggerHub API Auto Mocking
+    url: https://localhost:3000
