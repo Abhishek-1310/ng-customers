@@ -1,3 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuites name="jest tests" tests="0" failures="0" errors="0" time="3.186">
+<testsuites name="jest tests" tests="5" failures="1" errors="0" time="3.883">
+  <testsuite name="handler" errors="0" failures="1" skipped="0" timestamp="2024-05-22T17:27:28" time="3.553" tests="5">
+    <testcase classname="handler should return 400 when customer id is less then 7" name="handler should return 400 when customer id is less then 7" time="0.003">
+    </testcase>
+    <testcase classname="handler should return 400 when customer id is greater then 7" name="handler should return 400 when customer id is greater then 7" time="0">
+    </testcase>
+    <testcase classname="handler should return 400 when no customer id" name="handler should return 400 when no customer id" time="0.001">
+    </testcase>
+    <testcase classname="handler should return 500 when customer id is a number" name="handler should return 500 when customer id is a number" time="0">
+    </testcase>
+    <testcase classname="handler should return 200 with data when customer id is a correct" name="handler should return 200 with data when customer id is a correct" time="0.037">
+      <failure>Error: expect(received).toHaveBeenCalledWith(...expected)
+
+Matcher error: received value must be a mock or spy function
+
+Received has value: undefined
+    at Object.&lt;anonymous&gt; (C:\Users\2262943\vs code\nextgen-customer\ng-customers\tests\customerDetailsController.test.ts:163:44)
+    at processTicksAndRejections (node:internal/process/task_queues:95:5)</failure>
+    </testcase>
+  </testsuite>
 </testsuites>

@@ -2,7 +2,7 @@ import { CustomerDetailsRepository } from "../repository/customerDetailsReposito
 import { CustomerDetailsService } from "../service/customerDetailsService"
 
 
-const customerTableName = 'ng-customerDetails'
+const customerTableName = 'ngcustomer'
 const customerDetailsRepository = new CustomerDetailsRepository(customerTableName)
 const customerDetailsService = new CustomerDetailsService(customerDetailsRepository);
 
@@ -10,7 +10,7 @@ export const handler = async (event) => {
 
     try {
         const customerId = event.pathParameters?.customerId;
-        if (!customerId || isNaN(Number(customerId)) || customerId.length < 6 || customerId.length > 6) {
+        if (!customerId || customerId.length < 7 || customerId.length > 7) {
             return {
                 statusCode: 400,
                 headers: {

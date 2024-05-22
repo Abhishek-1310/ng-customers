@@ -1,78 +1,172 @@
 import { handler } from '../src/controller/customerDetailsController'
-// const handler = require('../src/controller/customerDetailsController')
 import { CustomerDetailsService } from "../src/service/customerDetailsService"
-// const CustomerDetailsService = require("../src/service/customerDetailsService")
+import { CustomerDetailsRepository } from "../src/repository/customerDetailsRepository"
 
 
-jest.mock('../src/service/customerDetailsService');
+
+// jest.mock('../src/service/customerDetailsService', () => {
+//     return {
+//         CustomerDetailsService: jest.fn().mockImplementation(() => {
+//             return {
+//                 getCustomerDetailsById: jest.fn()
+//             };
+//         })
+//     };
+// });
+
+jest.mock('../src/service/customerDetailsService', () => {
+    return {
+        CustomerDetailsService: jest.fn().mockImplementation(() => {
+            return {
+                getCustomerDetailsById: jest.fn()
+
+            };
+        })
+    };
+});
+
+jest.mock("../src/repository/customerDetailsRepository", () => {
+    return {
+        CustomerDetailsRepository: jest.fn().mockImplementation(() => {
+            return {
+                getCustomerById: jest.fn().mockResolvedValue({
+                    "customerId": "3678905",
+                    "appliances": [
+                        {
+                            "age": "12",
+                            "applianceId": "26543260",
+                            "applianceName": "Gas Cooker",
+                            "category": "gas",
+                            "manufactureDate": "2012-11-17"
+                        },
+                        {
+                            "age": "10",
+                            "applianceId": "26543261",
+                            "applianceName": "Refrigerator",
+                            "category": "electricity",
+                            "manufactureDate": "2014-11-01"
+                        }
+                    ],
+                    "email": "stevejobs@gmail.com",
+                    "firstName": "Steve",
+                    "lastName": "Jobs",
+                    "phonenumber": "9080706050"
+
+                }),
+
+            };
+        })
+    };
+});
+
 
 
 describe('handler', () => {
-    const customerDetailsService = new CustomerDetailsService(null);
-    const getcustomerDetailsByIdSpy = jest.spyOn(customerDetailsService, 'getcustomerDetailsById');
+    let mockGetCustomerDetailsById: jest.Mock;
+    beforeAll(() => {
+
+        mockGetCustomerDetailsById = new CustomerDetailsService(new CustomerDetailsRepository("mock-table-name")).getcustomerDetailsById as jest.Mock;
+
+    });
+
+
+
+
+
 
     afterEach(() => {
-        getcustomerDetailsByIdSpy.mockReset();
+        jest.clearAllMocks();
     });
 
-    it('returns 400 error when customerId is not a number', async () => {
-        const event = { pathParameters: { customerId: 'abc' } };
-        const result = await handler(event);
-        expect(result).toEqual({
-            statusCode: 400,
-            headers: {
-                'Access-Control-Allow-Origin': '*',
-                'Access-Control-Allow-Headers': 'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Requested-With',
-                'Access-Control-Allow-Methods': 'OPTIONS,POST,GET,PUT,DELETE'
-            },
-            body: JSON.stringify({ error: 'Invalid customer ID', status: 400 }),
-            message: 'Invalid customer ID'
-        });
-    });
+    test('should return 400 when customer id is less then 7', async () => {
+        const event = {
+            pathParameters: {
+                customerId: '123453'
+            }
+        };
 
-    it('returns 400 error when customerId is missing', async () => {
-        const event = { pathParameters: {} };
-        const result = await handler(event);
-        expect(result.statusCode).toBe(400);
-        expect(result.body).toContain('Invalid customer ID');
-    });
-
-    it('returns 400 error when customerId is not a number', async () => {
-        const event = { pathParameters: { customerId: 'abc' } };
-        const result = await handler(event);
-        expect(result.statusCode).toBe(400);
-        expect(result.body).toContain('Invalid customer ID');
-    });
-
-    it('returns 400 error when customerId is less than 6 characters', async () => {
-        const event = { pathParameters: { customerId: '12345' } };
-        const result = await handler(event);
-        expect(result.statusCode).toBe(400);
-        expect(result.body).toContain('Invalid customer ID');
-    });
-
-    it('returns 400 error when customerId is more than 6 characters', async () => {
-        const event = { pathParameters: { customerId: '1234567' } };
-        const result = await handler(event);
-        expect(result.statusCode).toBe(400);
-        expect(result.body).isContained('Invalid customer ID');
-    });
-    it('should return successful response with customer details', async () => {
-        const event = { pathParameters: { customerId: '123456' } };
-        getcustomerDetailsByIdSpy.mockResolvedValueOnce({ name: 'John Doe' });
         const response = await handler(event);
+        expect(response.statusCode).toBe(400);
+        const responseBody = JSON.parse(response.body as string);
+        expect(responseBody.error).toBe('Invalid customer ID');
+    });
+    test('should return 400 when customer id is greater then 7', async () => {
+        const event = {
+            pathParameters: {
+                customerId: '12345453'
+            }
+        };
+
+        const response = await handler(event);
+        expect(response.statusCode).toBe(400);
+        const responseBody = JSON.parse(response.body as string);
+        expect(responseBody.error).toBe('Invalid customer ID');
+    });
+    test('should return 400 when no customer id', async () => {
+        const event = {
+            pathParameters: {
+                customerId: ''
+            }
+        };
+
+        const response = await handler(event);
+        expect(response.statusCode).toBe(400);
+        const responseBody = JSON.parse(response.body as string);
+        expect(responseBody.error).toBe('Invalid customer ID');
+    });
+    test('should return 500 when customer id is a number', async () => {
+        const event = {
+            pathParameters: {
+                customerId: 123456
+            }
+        };
+
+        const response = await handler(event);
+        expect(response.statusCode).toBe(500);
+        const responseBody = JSON.parse(response.body as string);
+        expect(responseBody.error).toBe('Internal server error!');
+    });
+    test('should return 200 with data when customer id is a correct', async () => {
+        const event = {
+            pathParameters: {
+                customerId: '3678905'
+            }
+        };
+        const expectedResult = {
+            "customerId": "3678905",
+            "appliances": [
+                {
+                    "age": "12",
+                    "applianceId": "26543260",
+                    "applianceName": "Gas Cooker",
+                    "category": "gas",
+                    "manufactureDate": "2012-11-17"
+                },
+                {
+                    "age": "10",
+                    "applianceId": "26543261",
+                    "applianceName": "Refrigerator",
+                    "category": "electricity",
+                    "manufactureDate": "2014-11-01"
+                }
+            ],
+            "email": "stevejobs@gmail.com",
+            "firstName": "Steve",
+            "lastName": "Jobs",
+            "phonenumber": "9080706050"
+
+        }
+
+
+        const response = await handler(event);
+        console.log('Response:', response.body);
+        expect(mockGetCustomerDetailsById).toHaveBeenCalledWith('3678905');
         expect(response.statusCode).toBe(200);
-        expect(response.body).toBe(JSON.stringify({ name: 'John Doe' }));
+        expect(response.body).toEqual(expectedResult);
     });
 
-    it('should catch and return internal server error on exception', async () => {
-        getcustomerDetailsByIdSpy.mockRejectedValueOnce(new Error('Internal server error'));
-        try {
-            await handler({ pathParameters: { customerId: '123456' } })
-        }
-        catch (e) {
-            console.log(e)
-            throw e
-        }
-    });
+
+
+
+
 });
