@@ -3,17 +3,6 @@ import { CustomerDetailsService } from "../src/service/customerDetailsService"
 import { CustomerDetailsRepository } from "../src/repository/customerDetailsRepository"
 
 
-
-// jest.mock('../src/service/customerDetailsService', () => {
-//     return {
-//         CustomerDetailsService: jest.fn().mockImplementation(() => {
-//             return {
-//                 getCustomerDetailsById: jest.fn()
-//             };
-//         })
-//     };
-// });
-
 jest.mock('../src/service/customerDetailsService', () => {
     return {
         CustomerDetailsService: jest.fn().mockImplementation(() => {
@@ -68,10 +57,6 @@ describe('handler', () => {
         mockGetCustomerDetailsById = new CustomerDetailsService(new CustomerDetailsRepository("mock-table-name")).getcustomerDetailsById as jest.Mock;
 
     });
-
-
-
-
 
 
     afterEach(() => {
@@ -156,7 +141,6 @@ describe('handler', () => {
             "phonenumber": "9080706050"
 
         }
-
 
         const response = await handler(event);
         console.log('Response:', response.body);

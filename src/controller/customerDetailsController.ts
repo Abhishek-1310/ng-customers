@@ -1,50 +1,47 @@
-import { CustomerDetailsRepository } from "../repository/customerDetailsRepository"
 import { CustomerDetailsService } from "../service/customerDetailsService"
+import { CustomerDetailsResponse } from "../model/iCustomerDetailsResponse";
 
+export class CustomerDetailsController {
+    private customerDetailsService: CustomerDetailsService;
 
-const customerTableName = 'ngcustomer'
-const customerDetailsRepository = new CustomerDetailsRepository(customerTableName)
-const customerDetailsService = new CustomerDetailsService(customerDetailsRepository);
+    constructor(customerDetailsService: CustomerDetailsService) {
+        this.customerDetailsService = customerDetailsService;
+    }
 
-export const handler = async (event) => {
-
-    try {
-        const customerId = event.pathParameters?.customerId;
-        if (!customerId || customerId.length < 7 || customerId.length > 7) {
-            return {
-                statusCode: 400,
-                headers: {
-                    'Access-Control-Allow-Origin': '*',
-                    'Access-Control-Allow-Headers': 'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Requested-With',
-                    'Access-Control-Allow-Methods': 'OPTIONS,POST,GET,PUT,DELETE'
-                },
-                body: JSON.stringify({ error: 'Invalid customer ID', status: 400 }),
-                message: 'Invalid customer ID'
-            };
-        }
-        const getCustomer = await customerDetailsService.getcustomerDetailsById(customerId);
-        return {
-            statusCode: 200,
-            headers: {
-                'Access-Control-Allow-Origin': '*',
-                'Access-Control-Allow-Headers': 'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Requested-With', // Allow specific headers
-                'Access-Control-Allow-Methods': 'OPTIONS,POST,GET,PUT,DELETE'
-            },
-            body: getCustomer,
-            message: 'Employee Data get succesfully',
-        };
-    } catch (error) {
-
-        return {
-            statusCode: 500,
-            headers: {
-                'Access-Control-Allow-Origin': '*',
-                'Access-Control-Allow-Headers': 'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Requested-With',
-                'Access-Control-Allow-Methods': 'OPTIONS,POST,GET,PUT,DELETE'
-            },
-            body: JSON.stringify({ error: 'Internal server error!' }),
-            message: 'Failed to get Data',
-        }
+    async getcustomerDetailsById(customerId: string): Promise<CustomerDetailsResponse> {
+        return await this.customerDetailsService.getcustomerDetailsById(customerId);
     }
 
 }
+
+// export const handler = async (event) => {
+
+//     try {
+//         const customerId = event.pathParameters?.customerId;
+//         if (!customerId || customerId.length < 7 || customerId.length > 7) {
+//             return {
+//                 statusCode: StatusCode.BAD_REQUEST,
+//                 headers: HEADERS,
+//                 body: JSON.stringify({ error: MESSAGES.INVALID_CUSTOMER_ID }),
+//                 message: MESSAGES.INVALID_CUSTOMER_ID
+//             };
+//         }
+//         const getCustomer = await customerDetailsService.getcustomerDetailsById(customerId);
+//         const body = buildCustomerResponse(getCustomer);
+//         return {
+//             statusCode: StatusCode.OK,
+//             headers: HEADERS,
+//             body: body,
+//             message: MESSAGES.EMPLOYEE_DATA_SUCCESS
+//         };
+//     } catch (error) {
+
+//         return {
+//             statusCode: StatusCode.INTERNAL_SERVER_ERROR,
+//             headers: HEADERS,
+//             body: JSON.stringify({ error: MESSAGES.FAILED_TO_GET_DATA }),
+//             message: MESSAGES.FAILED_TO_GET_DATA
+//         }
+//     }
+
+// }
