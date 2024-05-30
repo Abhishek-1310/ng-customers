@@ -20,7 +20,6 @@ class CustomerDetailsRepository {
             }
         });
         const response = await this.docClint.send(command);
-        console.log(response);
         return response;
     }
 }
