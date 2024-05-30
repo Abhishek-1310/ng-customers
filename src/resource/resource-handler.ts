@@ -12,7 +12,6 @@ import {
     StatusCode,
     HEADERS,
     MESSAGES
-
 } from "../constant/constants"
 
 export const handler = async (event) => {
@@ -20,30 +19,26 @@ export const handler = async (event) => {
         const customerId = event.pathParameters?.customerId;
         if (!customerId || customerId.length < 7 || customerId.length > 7) {
             return {
-                statusCode: StatusCode.BAD_REQUEST,
-                headers: HEADERS,
-                body: JSON.stringify({ error: MESSAGES.INVALID_CUSTOMER_ID }),
-                message: MESSAGES.INVALID_CUSTOMER_ID
+                "statusCode": StatusCode.BAD_REQUEST,
+                "headers": HEADERS,
+                "body": JSON.stringify({ error: MESSAGES.INVALID_CUSTOMER_ID }),
             };
         }
         const getCustomer = await customerDetailsController.getcustomerDetailsById(customerId);
         const body = buildCustomerResponse(getCustomer);
         return {
-            statusCode: StatusCode.OK,
-            headers: HEADERS,
-            body: body,
-            message: MESSAGES.EMPLOYEE_DATA_SUCCESS
+            "statusCode": StatusCode.OK,
+            "headers": HEADERS,
+            "body": JSON.stringify(body),
         };
     } catch (error) {
 
         return {
-            statusCode: StatusCode.INTERNAL_SERVER_ERROR,
-            headers: HEADERS,
-            body: JSON.stringify({ error: MESSAGES.FAILED_TO_GET_DATA }),
-            message: MESSAGES.FAILED_TO_GET_DATA
+            "statusCode": StatusCode.INTERNAL_SERVER_ERROR,
+            "headers": HEADERS,
+            "body": JSON.stringify({ error: MESSAGES.FAILED_TO_GET_DATA }),
+
         }
     }
-
-
 
 }

@@ -22,7 +22,6 @@ export class CustomerDetailsRepository {
         });
 
         const response: any = await this.docClint.send(command);
-        console.log(response);
         return response;
     }
 
