@@ -4,7 +4,9 @@
     "@aws-sdk/lib-dynamodb": "^3.582.0",
     "@aws-sdk/util-dynamodb": "^3.529.1",
     "aws-sdk": "^2.1599.0",
-    "http": "^0.0.1-security"
+    "http": "^0.0.1-security",
+    "jsonwebtoken": "^9.0.2",
+    "jwt-decode": "^4.0.0"
   },
   "devDependencies": {
     "@types/jest": "^29.5.12",
