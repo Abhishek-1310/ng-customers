@@ -1,0 +1,1 @@
+{"version":3,"file":"customerDetailsService.js","sourceRoot":"src/","sources":["service/customerDetailsService.ts"],"names":[],"mappings":";;;AAGA,MAAa,sBAAsB;IACvB,yBAAyB,CAA4B;IAE7D,YAAY,yBAAoD;QAC5D,IAAI,CAAC,yBAAyB,GAAG,yBAAyB,CAAC;IAC/D,CAAC;IAED,KAAK,CAAC,sBAAsB,CAAC,UAAkB;QAC3C,OAAO,MAAM,IAAI,CAAC,yBAAyB,CAAC,sBAAsB,CAAC,UAAU,CAAC,CAAC;IACnF,CAAC;CAEJ;AAXD,wDAWC"}

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="jest tests" tests="8" failures="5" errors="0" time="28.309">
+  <testsuite name="CustomerDetailsRepository" errors="0" failures="0" skipped="0" timestamp="2024-06-26T05:28:09" time="2.417" tests="1">
+    <testcase classname="CustomerDetailsRepository should return customer details by id" name="CustomerDetailsRepository should return customer details by id" time="0.02">
+    </testcase>
+  </testsuite>
+  <testsuite name="ConsumptionDetailsService" errors="0" failures="0" skipped="0" timestamp="2024-06-26T05:28:09" time="2.606" tests="1">
+    <testcase classname="ConsumptionDetailsService should get consumption details by ID" name="ConsumptionDetailsService should get consumption details by ID" time="0.007">
+    </testcase>
+  </testsuite>
+  <testsuite name="ConsumptionDetailsService" errors="0" failures="5" skipped="0" timestamp="2024-06-26T05:28:09" time="3.144" tests="6">
+    <testcase classname="ConsumptionDetailsService should get consumption details by ID" name="ConsumptionDetailsService should get consumption details by ID" time="0.012">
+    </testcase>
+    <testcase classname="ConsumptionDetailsService employee data not found" name="ConsumptionDetailsService employee data not found" time="0.002">
+      <failure>Error: expect(received).toBe(expected) // Object.is equality
+
+Expected: 404
+Received: 500
+    at Object.&lt;anonymous&gt; (C:\Users\2262943\vs code\nextgen-customer\ng-customers\tests\customerDetailsController.test.ts:56:31)
+    at processTicksAndRejections (node:internal/process/task_queues:95:5)</failure>
+    </testcase>
+    <testcase classname="ConsumptionDetailsService invalid customer id id greater then 7" name="ConsumptionDetailsService invalid customer id id greater then 7" time="0.001">
+      <failure>Error: expect(received).toBe(expected) // Object.is equality
+
+Expected: 400
+Received: 500
+    at Object.&lt;anonymous&gt; (C:\Users\2262943\vs code\nextgen-customer\ng-customers\tests\customerDetailsController.test.ts:68:31)
+    at processTicksAndRejections (node:internal/process/task_queues:95:5)</failure>
+    </testcase>
+    <testcase classname="ConsumptionDetailsService invalid customer id, id less then 7" name="ConsumptionDetailsService invalid customer id, id less then 7" time="0.001">
+      <failure>Error: expect(received).toBe(expected) // Object.is equality
+
+Expected: 400
+Received: 500
+    at Object.&lt;anonymous&gt; (C:\Users\2262943\vs code\nextgen-customer\ng-customers\tests\customerDetailsController.test.ts:80:31)
+    at processTicksAndRejections (node:internal/process/task_queues:95:5)</failure>
+    </testcase>
+    <testcase classname="ConsumptionDetailsService invalid customer Id empty string" name="ConsumptionDetailsService invalid customer Id empty string" time="0">
+      <failure>Error: expect(received).toBe(expected) // Object.is equality
+
+Expected: 400
+Received: 500
+    at Object.&lt;anonymous&gt; (C:\Users\2262943\vs code\nextgen-customer\ng-customers\tests\customerDetailsController.test.ts:92:31)
+    at processTicksAndRejections (node:internal/process/task_queues:95:5)</failure>
+    </testcase>
+    <testcase classname="ConsumptionDetailsService invalid customer Id is number " name="ConsumptionDetailsService invalid customer Id is number " time="0">
+      <failure>Error: expect(received).toBe(expected) // Object.is equality
+
+Expected: 400
+Received: 500
+    at Object.&lt;anonymous&gt; (C:\Users\2262943\vs code\nextgen-customer\ng-customers\tests\customerDetailsController.test.ts:104:31)
+    at processTicksAndRejections (node:internal/process/task_queues:95:5)</failure>
+    </testcase>
+  </testsuite>
+</testsuites>
